@@ -64,3 +64,6 @@ main{position:relative;z-index:2;pointer-events:none}
 .cursor-lens{border-color:rgba(180,231,255,.13);opacity:.55}.cursor-lens.active{border-color:rgba(203,244,255,.46)}
 @media(pointer:fine){#universe{cursor:none}.inspector,.topbar,.scale-rail,.help-panel,.stage-toast,.finale-card{cursor:auto}}
 @media(max-width:900px){.topbar{background:linear-gradient(180deg,rgba(0,2,8,.48),rgba(0,2,8,0))}}
+
+.accuracy-note{color:#374458;letter-spacing:.11em}
+@media(max-width:1180px){.coordinates .accuracy-note{display:none}}
