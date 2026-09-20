@@ -4,6 +4,11 @@ A dependency-free interactive learning site that starts near the edge of the obs
 
 ## Highlights
 
+### Realism pass
+
+The renderer now uses temperature-varied stars, restrained bloom, warm galactic bulges, cooler outer stellar populations, spiral-arm dust lanes, planet-specific lighting and atmospheres, layered Saturn rings, Jupiter banding, an Earth day/night terminator, city lights, clouds, ocean/land shaping, atmospheric limb glow and a deeper orbit-to-surface descent. Visual object sizes are intentionally compressed for legibility; the scale journey itself is logarithmic.
+
+
 - Long-form scroll-driven cosmic zoom across 15 scales: observable universe → cosmic web → Laniakea → Local Sheet → Local Group → Milky Way → solar neighborhood → Oort Cloud → outer Solar System → inner Solar System → Earth–Moon → Earth → low orbit → atmosphere → surface
 - Procedural rendering for stars, galaxies, cosmic filaments, orbits, atmosphere and motion
 - Pointer parallax plus frame-accurate hover targets tied to the actual rendered positions of galaxies, stars and moving planets
