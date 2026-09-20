@@ -97,7 +97,7 @@ function updateUI(){
   const next=STAGES[Math.min(STAGES.length-1,stageIndex+1)];
   const q=smooth(clamp((localP-.48)/.52));
   const exp=lerp(STAGES[stageIndex].exponent,next.exponent,q);
-  els.readout.textContent="Scale ~10^"+exp.toFixed(exp%1?.1:0)+" m";
+  els.readout.textContent="Scale ~10^"+exp.toFixed(exp%1 ? 1 : 0)+" m";
   els.journey.textContent=STAGES[stageIndex].title;
 }
 
@@ -218,7 +218,7 @@ function drawOrbit(time,s){
 }
 
 function drawAtmosphere(time,s){
-  const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,"#020915");sky.addColorStop(.30,"#071a32");sky.addColorStop(.58,"#1e5e91");sky.addColorStop(.78,"#78b6d7");sky.addColorStop(1,"#d6e6ed");ctx.globalAlpha=.96;ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;
+  const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,"#020915");sky.addColorStop(.30,"#071a32");sky.addColorStop(.58,"#1e5e91");sky.addColorStop(.78,"#78b6d7");sky.addColorStop(1,"#d6e6ed");ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
   const horizon=H*.77;const earth=ctx.createLinearGradient(0,horizon,0,H);earth.addColorStop(0,"#315b6e");earth.addColorStop(1,"#07141c");ctx.fillStyle=earth;ctx.fillRect(0,horizon,W,H-horizon);
   ctx.fillStyle="rgba(239,247,250,.55)";for(let i=0;i<24;i++){const x=rand(i*5.2)*W,y=H*(.57+rand(i*7.8)*.22),rw=40+rand(i*2.1)*130,rh=5+rand(i*9.1)*22;ctx.beginPath();ctx.ellipse(x,y,rw,rh,rand(i)*.3,0,Math.PI*2);ctx.fill()}
   const kx=W*.72,ky=H*.28;line(kx-70,ky,kx+70,ky,PALETTE.cyan,1,.28);label("100 km — KÁRMÁN LINE (CONVENTION)",kx-66,ky-9,.46);registerHit(s,"karman",kx,ky,38);registerHit(s,"troposphere",W*.29,H*.67,50);registerHit(s,"clouds",W*.61,H*.67,50)
