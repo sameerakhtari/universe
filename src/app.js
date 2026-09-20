@@ -62,7 +62,7 @@ function glow(x,y,r,c,a){
 }
 function label(text,x,y,a){
   ctx.font="8px ui-monospace,SFMono-Regular,Menlo,monospace";
-  ctx.fillStyle="rgba(215,235,255,"+(a===undefined?.5:a)+")";
+  ctx.fillStyle="rgba(215,235,255,"+(a===undefined ? .5 : a)+")";
   ctx.textAlign="left";ctx.fillText(text,x,y);
 }
 
@@ -184,7 +184,7 @@ function withScene(alpha,zoom,fn){
 }
 
 function drawSpiralGalaxy(x,y,r,rot,alpha,tilt,seed){
-  alpha=alpha===undefined?1:alpha;tilt=tilt===undefined?.42:tilt;seed=seed||1;
+  alpha=alpha===undefined?1:alpha;tilt=tilt===undefined ? .42 : tilt;seed=seed||1;
   ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(1,tilt);
   const halo=ctx.createRadialGradient(0,0,0,0,0,r*1.1);
   halo.addColorStop(0,"rgba(255,225,176,"+(.26*alpha)+")");
@@ -577,7 +577,7 @@ function drawTargetRings(){
 function hitTest(){
   let best=null,bestD=Infinity;
   hitAreas.forEach(function(h){const d=Math.hypot(pointer.sx-h.x,pointer.sy-h.y);if(d<h.r+14&&d<bestD){best=h;bestD=d}});
-  hovered=best;canvas.style.cursor=best?"pointer":"default";els.lens.classList.toggle("active",!!best);
+  hovered=best;els.lens.classList.toggle("active",!!best);
   if(best&&!pinned){
     const o=best.obj;els.hint.hidden=false;els.hint.querySelector(".hint-type").textContent=o.type;els.hint.querySelector(".hint-name").textContent=o.name;els.hint.querySelector(".hint-summary").textContent=o.summary;
     const pad=16,tw=230,th=125;let x=pointer.sx+18,y=pointer.sy+18;if(x+tw>W-pad)x=pointer.sx-tw-18;if(y+th>H-pad)y=pointer.sy-th-18;
@@ -644,6 +644,6 @@ function initSound(){
 }
 els.sound.addEventListener("click",async function(){
   if(!audio)initSound();if(!audio)return;if(audio.state==="suspended")await audio.resume();
-  soundOn=!soundOn;audio._gain.gain.cancelScheduledValues(audio.currentTime);audio._gain.gain.linearRampToValueAtTime(soundOn?.014:.0001,audio.currentTime+.7);
+  soundOn=!soundOn;audio._gain.gain.cancelScheduledValues(audio.currentTime);audio._gain.gain.linearRampToValueAtTime(soundOn ? .014 : .0001,audio.currentTime+.7);
   els.sound.setAttribute("aria-pressed",String(soundOn));
 });
