@@ -1,0 +1,16 @@
+services:
+  universe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: universe
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
