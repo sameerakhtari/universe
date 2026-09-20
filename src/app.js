@@ -673,6 +673,6 @@ els.sound.addEventListener("click",async()=>{
 
   soundOn=!soundOn;
   audio._gain.gain.cancelScheduledValues(audio.currentTime);
-  audio._gain.gain.linearRampToValueAtTime(soundOn?.018:.0001,audio.currentTime+.8);
+  audio._gain.gain.linearRampToValueAtTime(soundOn ? .018 : .0001,audio.currentTime+.8);
   els.sound.setAttribute("aria-pressed",String(soundOn));
 });
