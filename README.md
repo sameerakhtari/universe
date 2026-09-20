@@ -4,10 +4,11 @@ A dependency-free interactive learning site that starts near the edge of the obs
 
 ## Highlights
 
-- Scroll-driven cosmic zoom: observable universe → cosmic web → Laniakea → Local Group → Milky Way → Orion Spur → Solar System → Earth
+- Long-form scroll-driven cosmic zoom across 15 scales: observable universe → cosmic web → Laniakea → Local Sheet → Local Group → Milky Way → solar neighborhood → Oort Cloud → outer Solar System → inner Solar System → Earth–Moon → Earth → low orbit → atmosphere → surface
 - Procedural rendering for stars, galaxies, cosmic filaments, orbits, atmosphere and motion
-- Pointer parallax, hover targets and click-to-pin object facts
-- Scale/progress HUD, stage navigator, keyboard controls and reduced-motion support
+- Pointer parallax plus frame-accurate hover targets tied to the actual rendered positions of galaxies, stars and moving planets
+- Hover gives a quick explanation; click/tap opens a detailed fact inspector
+- Auto-dismissing stage briefings, scale/progress HUD, 15-stage navigator, keyboard controls and reduced-motion support
 - Responsive desktop/mobile design
 - No runtime framework, analytics, trackers, external fonts or third-party scripts
 - No GitHub Actions and no generated build artifacts
