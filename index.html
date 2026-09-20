@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#02040b">
+  <meta name="description" content="An interactive, scroll-driven journey from the observable universe to Earth.">
+  <meta name="color-scheme" content="dark">
+  <title>UNIVERSE — From the Cosmic Horizon to Earth</title>
+  <link rel="icon" href="./assets/universe-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <noscript><div class="noscript">This experience needs JavaScript enabled to render the interactive universe.</div></noscript>
+  <canvas id="universe" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Universe home">
+      <img src="./assets/universe-mark.svg" alt="" width="28" height="28">
+      <span>UNIVERSE</span>
+    </a>
+    <div class="top-actions">
+      <button id="soundToggle" class="ghost-btn" type="button" aria-pressed="false" title="Toggle ambient sound">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="btn-label">Sound</span>
+      </button>
+      <button id="helpToggle" class="ghost-btn" type="button" aria-expanded="false" aria-controls="helpPanel">Controls</button>
+    </div>
+  </header>
+
+  <aside class="scale-rail" aria-label="Journey progress">
+    <div class="rail-line"><span id="railFill"></span></div>
+    <ol id="stageNav"></ol>
+  </aside>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <p class="eyebrow">A JOURNEY ACROSS ~46.5 BILLION LIGHT-YEARS</p>
+        <h1 id="heroTitle">You are here.<br><span>First, find out where “here” is.</span></h1>
+        <p class="hero-lede">Scroll inward through the observable universe, the cosmic web, our galaxy and the Solar System — until one blue world fills the view.</p>
+        <div class="scroll-cue" aria-hidden="true"><span>Scroll to descend</span><b></b></div>
+      </div>
+    </section>
+
+    <div id="stageSections" aria-hidden="true"></div>
+
+    <section class="finale" aria-labelledby="finaleTitle">
+      <div class="finale-card">
+        <p class="eyebrow">THE PALE BLUE DOT</p>
+        <h2 id="finaleTitle">The universe became capable of looking back at itself.</h2>
+        <p>Every person you have ever known lives on the luminous edge of this world. Keep exploring: hover Earth and its markers, then use the timeline to travel outward again.</p>
+        <button id="restartButton" class="primary-btn" type="button">Return to the cosmic horizon</button>
+      </div>
+    </section>
+  </main>
+
+  <section id="stageCard" class="stage-card" aria-live="polite">
+    <div class="stage-index"><span id="stageNumber">01</span><b>/08</b></div>
+    <div>
+      <p id="stageKicker" class="eyebrow"></p>
+      <h2 id="stageTitle"></h2>
+      <p id="stageDescription"></p>
+      <div class="fact-row"><span id="stageScale"></span><span id="stageDistance"></span></div>
+    </div>
+  </section>
+
+  <div id="targetHint" class="target-hint" hidden>
+    <span></span><strong></strong><small>Click to pin</small>
+  </div>
+
+  <aside id="inspector" class="inspector" aria-live="polite" aria-hidden="true">
+    <button id="inspectorClose" class="inspector-close" type="button" aria-label="Close details">×</button>
+    <p id="inspectorType" class="eyebrow"></p>
+    <h2 id="inspectorTitle"></h2>
+    <p id="inspectorText"></p>
+    <dl id="inspectorFacts"></dl>
+  </aside>
+
+  <aside id="helpPanel" class="help-panel" hidden>
+    <p class="eyebrow">NAVIGATION</p>
+    <div><kbd>Scroll</kbd><span>Travel across scale</span></div>
+    <div><kbd>Move</kbd><span>Shift perspective</span></div>
+    <div><kbd>Hover</kbd><span>Inspect objects</span></div>
+    <div><kbd>Click</kbd><span>Pin details</span></div>
+    <div><kbd>↑ ↓</kbd><span>Jump between scales</span></div>
+    <div><kbd>Esc</kbd><span>Close details</span></div>
+  </aside>
+
+  <div class="coordinates" aria-hidden="true">
+    <span id="scaleReadout">Scale ~10^26 m</span>
+    <span id="pointerReadout">RA — / DEC —</span>
+  </div>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
