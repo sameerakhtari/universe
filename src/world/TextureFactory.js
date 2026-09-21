@@ -115,3 +115,29 @@ export function createSunTexture() {
   noiseDots(ctx,1024,512,'#fff0a0',2200,.3,2,.18);noiseDots(ctx,1024,512,'#c86a20',1200,.3,1.8,.12);
   return finish(canvas);
 }
+
+
+export function createNightLightsTexture() {
+  const { canvas, ctx } = canvasTexture(1600, 800);
+  ctx.clearRect(0, 0, 1600, 800);
+  const clusters = [
+    [285,245,120,60,180],[735,220,90,55,170],[870,245,90,65,120],
+    [1010,330,105,65,180],[1180,255,125,70,230],[1320,285,45,80,90],
+    [390,455,80,75,90],[790,405,65,90,75],[1260,520,75,50,60]
+  ];
+  let index = 0;
+  for (const [cx,cy,rx,ry,count] of clusters) {
+    for (let i=0;i<count;i+=1) {
+      const angle=seeded((index+i)*5.23)*Math.PI*2;
+      const radius=Math.sqrt(seeded((index+i)*7.11));
+      const x=cx+Math.cos(angle)*radius*rx;
+      const y=cy+Math.sin(angle)*radius*ry;
+      const size=.45+seeded((index+i)*11.7)*1.55;
+      const warm=seeded((index+i)*13.9);
+      ctx.fillStyle=warm>.72?'rgba(255,226,154,.94)':'rgba(255,177,92,.82)';
+      ctx.beginPath();ctx.arc(x,y,size,0,Math.PI*2);ctx.fill();
+    }
+    index+=count;
+  }
+  return finish(canvas, THREE.NoColorSpace);
+}
