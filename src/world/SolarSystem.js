@@ -13,7 +13,7 @@ export function createSolarSystem({mode='outer',z=0}={}) {
   const group=new THREE.Group();group.position.z=z;
   const interactives=[];
   const sunMat=new THREE.MeshBasicMaterial({map:createSunTexture(),color:'#fff4c7'});
-  const sun=new THREE.Mesh(new THREE.SphereGeometry(mode==='outer'?15:22,64,40),sunMat);sun.name='Sun';group.add(sun);
+  const sun=new THREE.Mesh(new THREE.SphereGeometry(mode==='outer'?15:22,64,40),sunMat);sun.name='Sun';group.add(sun);interactives.push({object:sun,id:'sun'});
   const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:createGlowTexture('#ffc66f'),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.7}));const gs=mode==='outer'?105:145;glow.scale.set(gs,gs,1);sun.add(glow);
   const light=new THREE.PointLight('#fff0cb',mode==='outer'?4200:5200,900,1.65);sun.add(light);
 
