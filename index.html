@@ -92,8 +92,13 @@
   <div id="cursor" class="cursor" aria-hidden="true"><i></i></div>
   <div id="loading" class="loading"><span>Constructing universe</span><i></i></div>
   <div id="webglFallback" class="fallback" hidden>
-    <h1>WebGL is required</h1>
-    <p>This experience needs hardware-accelerated WebGL. Try a current Safari, Chrome, Firefox, or Edge browser with graphics acceleration enabled.</p>
+    <div class="fallback-card">
+      <p class="eyebrow">STARTUP DIAGNOSTIC</p>
+      <h1 id="fallbackTitle">The universe failed to initialize</h1>
+      <p id="fallbackMessage">The exact startup error is shown below.</p>
+      <pre id="fallbackDetails"></pre>
+      <button class="primary-button" type="button" onclick="location.reload()">Reload experience</button>
+    </div>
   </div>
 
   <script type="module" src="/src/main.js"></script>
