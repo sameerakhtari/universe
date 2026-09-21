@@ -24,9 +24,12 @@ export class UniverseWorld {
     this._buildObservable();this._buildWeb();this._buildLaniakea();this._buildLocalSheet();this._buildLocalGroup();this._buildMilkyWay();this._buildNeighborhood();this._buildOort();this._buildSolarSystems();this._buildEarth();this._buildAtmosphere();this._buildSurface();
   }
 
-  _track(group,stageId) {
+  _track(group,stageId,visibleStageIds=null) {
     const index=this.stages.findIndex(stage=>stage.id===stageId);
-    this.stageGroups.push({group,index});
+    const visibleIndices=visibleStageIds
+      ? visibleStageIds.map(id=>this.stages.findIndex(stage=>stage.id===id)).filter(i=>i>=0)
+      : [index-1,index,index+1].filter(i=>i>=0&&i<this.stages.length);
+    this.stageGroups.push({group,index,visibleIndices});
     this.scene.add(group);
     return group;
   }
@@ -59,7 +62,7 @@ export class UniverseWorld {
   _buildNeighborhood(){const g=new THREE.Group();g.position.z=-5200;const count=this.quality.neighborhoodStars;const positions=new Float32Array(count*3),colors=new Float32Array(count*3);const palette=['#9fc4ff','#d8e5ff','#fff3d7','#ffd39a','#ff9d7f'];for(let i=0;i<count;i+=1){positions[i*3]=(rand(i*3)-.5)*520;positions[i*3+1]=(rand(i*5)-.5)*300;positions[i*3+2]=(rand(i*7)-.5)*520;const c=new THREE.Color(palette[Math.floor(rand(i*11)*palette.length)]);colors[i*3]=c.r;colors[i*3+1]=c.g;colors[i*3+2]=c.b}const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(positions,3));geo.setAttribute('color',new THREE.BufferAttribute(colors,3));g.add(new THREE.Points(geo,new THREE.PointsMaterial({size:1.6,vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false})));const sun=new THREE.Mesh(new THREE.SphereGeometry(8,32,24),new THREE.MeshBasicMaterial({color:'#fff0b5'}));sun.position.set(0,0,0);g.add(sun);const sg=new THREE.Sprite(new THREE.SpriteMaterial({map:createGlowTexture('#ffd070'),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.8}));sg.scale.set(80,80,1);sun.add(sg);this._register(sun,'neighborhood','sun-neighborhood');const sirius=new THREE.Mesh(new THREE.SphereGeometry(5.2,24,16),new THREE.MeshBasicMaterial({color:'#dff4ff'}));sirius.position.set(130,55,-70);g.add(sirius);const sGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:createGlowTexture('#a8dcff'),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.75}));sGlow.scale.set(55,55,1);sirius.add(sGlow);this._register(sirius,'neighborhood','sirius');const proxima=new THREE.Mesh(new THREE.SphereGeometry(3.6,20,14),new THREE.MeshBasicMaterial({color:'#ff987b'}));proxima.position.set(-118,-44,62);g.add(proxima);const pGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:createGlowTexture('#ff765f'),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.52}));pGlow.scale.set(34,34,1);proxima.add(pGlow);this._register(proxima,'neighborhood','proxima');this._track(g,'neighborhood')}
   _buildOort(){const g=new THREE.Group();g.position.z=-6040;const count=this.quality.reduced?1800:3200,positions=new Float32Array(count*3);for(let i=0;i<count;i+=1){const r=135+Math.pow(rand(i*3),.62)*180,a=rand(i*5)*Math.PI*2,p=Math.acos(2*rand(i*7)-1);positions[i*3]=Math.sin(p)*Math.cos(a)*r;positions[i*3+1]=Math.cos(p)*r;positions[i*3+2]=Math.sin(p)*Math.sin(a)*r}const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(positions,3));g.add(new THREE.Points(geo,new THREE.PointsMaterial({color:'#d8e9ff',size:.75,transparent:true,opacity:.36,depthWrite:false})));const sun=new THREE.Mesh(new THREE.SphereGeometry(5,24,16),new THREE.MeshBasicMaterial({color:'#fff2bd'}));g.add(sun);this._register(sun,'oort','sun-oort');const h=proxy(42);h.position.set(190,35,-15);g.add(h);this._register(h,'oort','oort-cloud');this._track(g,'oort')}
   _buildSolarSystems(){const outer=createSolarSystem({mode:'outer',z:-6680});this._track(outer.group,'outer-solar');this.updatables.push(outer.group);outer.interactives.forEach(({object,id})=>this._register(object,'outer-solar',id));const inner=createSolarSystem({mode:'inner',z:-7340});this._track(inner.group,'inner-solar');this.updatables.push(inner.group);inner.interactives.forEach(({object,id})=>this._register(object,'inner-solar',id))}
-  _buildEarth(){const earth=createEarthSystem({z:-8330,radius:64,withMoon:true,moonDistance:205});this._track(earth.group,'earth');this.updatables.push(earth.group);const earthMoonHit=proxy(64);earthMoonHit.position.set(0,0,-8330);this.scene.add(earthMoonHit);this._register(earthMoonHit,'earth-moon','earth-system');if(earth.moon)this._register(earth.moon,'earth-moon','moon');this._register(earth.earth,'earth','earth-globe');const atmosphereHit=proxy(16);atmosphereHit.position.set(-58,40,-8330);this.scene.add(atmosphereHit);this._register(atmosphereHit,'earth','atmosphere');const orbitHit=proxy(64);orbitHit.position.set(0,0,-8330);this.scene.add(orbitHit);this._register(orbitHit,'orbit','earth-limb')}
+  _buildEarth(){const earth=createEarthSystem({z:-8330,radius:64,withMoon:true,moonDistance:205});this._track(earth.group,'earth',['inner-solar','earth-moon','earth','orbit','atmosphere']);this.updatables.push(earth.group);const earthMoonHit=proxy(64);earthMoonHit.position.set(0,0,-8330);this.scene.add(earthMoonHit);this._register(earthMoonHit,'earth-moon','earth-system');if(earth.moon)this._register(earth.moon,'earth-moon','moon');this._register(earth.earth,'earth','earth-globe');const atmosphereHit=proxy(16);atmosphereHit.position.set(-58,40,-8330);this.scene.add(atmosphereHit);this._register(atmosphereHit,'earth','atmosphere');const orbitHit=proxy(64);orbitHit.position.set(0,0,-8330);this.scene.add(orbitHit);this._register(orbitHit,'orbit','earth-limb')}
   _buildAtmosphere(){const atm=createAtmosphereScene(-9060);this._track(atm.group,'atmosphere');atm.interactives.forEach(({object,id})=>this._register(object,'atmosphere',id))}
   _buildSurface(){const s=createSurfaceScene(-9730);this._track(s.group,'surface');this.updatables.push(s.group);s.interactives.forEach(({object,id})=>this._register(object,'surface',id))}
 
@@ -67,8 +70,8 @@ export class UniverseWorld {
     this.updatables.forEach(object=>{
       if(object.visible!==false)object.userData.update?.(time);
     });
-    this.stageGroups.forEach(({group,index})=>{
-      group.visible=Math.abs(index-stageIndex)<=1;
+    this.stageGroups.forEach(({group,visibleIndices})=>{
+      group.visible=visibleIndices.includes(stageIndex);
     });
     if(this.starField)this.starField.visible=stageIndex<14;
   }
