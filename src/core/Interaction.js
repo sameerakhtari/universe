@@ -49,7 +49,7 @@ export class Interaction {
     if (next !== this.hovered) {
       this.hovered = next;
       this.cursor?.classList.toggle('hot', Boolean(next));
-      this.onHover(next?.userData?.interactive || null);
     }
+    this.onHover(next?.userData?.interactive || null);
   }
 }
