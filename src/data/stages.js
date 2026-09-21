@@ -109,7 +109,7 @@ export const STAGES = [
     id: 'earth-moon', title: 'Earth–Moon System', kicker: '11 · OUR DOUBLE-WORLD VIEW', exponent: 9, hold: 1.7,
     scale: '~10⁹ metres', distance: 'Moon ≈ 384,400 km from Earth',
     description: 'Earth separates from the planetary system. The Moon becomes a distinct moving companion rather than a decorative dot.',
-    camera: { position: [42, 20, -7660], target: [0, 0, -7910], fov: 39 },
+    camera: { position: [45, 25, -7880], target: [0, 0, -8330], fov: 40 },
     objects: [
       { id: 'earth-system', name: 'Earth', type: 'Rocky planet', summary: 'A dynamic ocean world viewed together with its Moon.', text: 'Earth’s atmosphere, oceans, ice, active interior and magnetic field interact as a coupled planetary system.', facts: [['Diameter','12,742 km'],['Mean radius','6,371 km'],['Mass','5.97 × 10²⁴ kg'],['Natural satellites','1']] },
       { id: 'moon', name: 'Moon', type: 'Natural satellite', summary: 'Earth’s only natural satellite.', text: 'The Moon is tidally locked and is the dominant driver of Earth’s ocean tides.', facts: [['Mean distance','384,400 km'],['Diameter','3,475 km'],['Orbital period','27.3 days'],['Surface gravity','~16.5% of Earth']] }
