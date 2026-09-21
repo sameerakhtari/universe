@@ -26,7 +26,7 @@ export function createSpiralGalaxy({radius=110,count=9000,arms=3,seed=1,flatten=
   const core=new THREE.Sprite(coreMat);core.scale.set(radius*.68,radius*.68,1);group.add(core);
 
   const dustMat=new THREE.MeshBasicMaterial({color:'#080609',transparent:true,opacity:.32,depthWrite:false,side:THREE.DoubleSide});
-  for(let a=0;a<2;a+=1){const curve=[];for(let i=0;i<72;i+=1){const q=i/71,ang=a*Math.PI+q*7.7+.45,r=(.16+q*.68)*radius;curve.push(new THREE.Vector3(Math.cos(ang)*r,(a?1:-1)*.35,Math.sin(ang)*r))}const tube=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(curve),90,radius*.012,5,false);tube.scale.y=flatten;group.add(new THREE.Mesh(tube,dustMat));}
+  for(let a=0;a<2;a+=1){const curve=[];for(let i=0;i<72;i+=1){const q=i/71,ang=a*Math.PI+q*7.7+.45,r=(.16+q*.68)*radius;curve.push(new THREE.Vector3(Math.cos(ang)*r,(a?1:-1)*.35,Math.sin(ang)*r))}const tube=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(curve),90,radius*.012,5,false);tube.scale(1,flatten,1);group.add(new THREE.Mesh(tube,dustMat));}
   return group;
 }
 
