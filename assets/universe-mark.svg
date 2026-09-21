@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-<circle cx="32" cy="32" r="3" fill="#DDF8FF"/>
-<circle cx="32" cy="32" r="14" stroke="#8FE8FF" stroke-width="1.5" opacity=".8"/>
-<ellipse cx="32" cy="32" rx="27" ry="11" transform="rotate(-24 32 32)" stroke="#879DFF" stroke-width="1.5"/>
-<circle cx="54" cy="20" r="2" fill="#B89CFF"/>
-</svg>
