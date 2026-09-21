@@ -14,6 +14,7 @@ export class Hud {
     this.introShown = false;
     this.panelTimer = 0;
     this.onNavigate = () => {};
+    this.inspecting = false;
     this._buildNav();
     this._wire();
   }
@@ -85,7 +86,7 @@ export class Hud {
   }
 
   showHover(data, x, y) {
-    if (!data) {
+    if (this.inspecting || !data) {
       this.hoverCard.hidden = true;
       return;
     }
@@ -102,6 +103,8 @@ export class Hud {
 
   openInspector(data) {
     if (!data) return;
+    this.inspecting = true;
+    this.hoverCard.hidden = true;
     this.closeStagePanel();
     document.querySelector('#inspectorType').textContent = data.type;
     document.querySelector('#inspectorTitle').textContent = data.name;
@@ -117,6 +120,7 @@ export class Hud {
     this.inspector.setAttribute('aria-hidden', 'false');
   }
   closeInspector() {
+    this.inspecting = false;
     this.inspector.classList.remove('open');
     this.inspector.setAttribute('aria-hidden', 'true');
   }
