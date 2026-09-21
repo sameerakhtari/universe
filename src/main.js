@@ -56,7 +56,7 @@ addEventListener('universefatal', (event) => showFatal(event.detail), { once: tr
 
 try {
   const app = new UniverseApp(document.querySelector('#universe'));
-  await app.init();
+  app.init().catch(showFatal);
 } catch (error) {
   showFatal(error);
 }
