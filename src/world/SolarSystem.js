@@ -33,11 +33,13 @@ export function createSolarSystem({mode='outer',z=0}={}) {
     const pivot=new THREE.Group();pivot.rotation.y=spec.phase;group.add(pivot);group.add(orbitLine(spec.orbit,'#8391a7',.13));
     const body=sphere(spec.r,spec.map);body.position.x=spec.orbit;body.rotation.z=spec.tilt;body.name=spec.id;pivot.add(body);
     if(spec.ring){
-      const ringGeo=new THREE.RingGeometry(spec.r*1.45,spec.r*2.45,128);const ringMat=new THREE.MeshStandardMaterial({color:'#d8c69e',transparent:true,opacity:.78,roughness:.9,side:THREE.DoubleSide,map:createRingTexture(),alphaTest:.05});const ring=new THREE.Mesh(ringGeo,ringMat);ring.rotation.x=Math.PI/2;body.add(ring);
+      const ringGeo=new THREE.RingGeometry(spec.r*1.45,spec.r*2.45,128);
+      const ringMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,fragmentShader:`varying vec2 vUv;void main(){float r=length(vUv-vec2(.5))*2.0;float bands=.62+.20*sin(r*94.0)+.10*sin(r*211.0);float cassini=1.0-smoothstep(.018,.045,abs(r-.78));float edge=smoothstep(.58,.63,r)*(1.0-smoothstep(.97,1.0,r));vec3 c=mix(vec3(.49,.42,.31),vec3(.92,.84,.66),bands);float a=edge*(.62+.26*bands)*(1.0-.72*cassini);gl_FragColor=vec4(c,a);}`});
+      const ring=new THREE.Mesh(ringGeo,ringMat);ring.rotation.x=Math.PI/2;body.add(ring);
     }
     bodies.push({pivot,body,spec,index});interactives.push({object:body,id:spec.id});
   });
-  group.userData.update=(time)=>{bodies.forEach(({pivot,body,spec,index})=>{pivot.rotation.y=spec.phase+time*.000035*spec.speed;body.rotation.y=time*.00009*(1+index*.12)});sun.rotation.y=time*.000025};
+  group.userData.update=(time)=>{bodies.forEach(({pivot,body,spec,index})=>{const rate=mode==='outer' ? .018 : .032;pivot.rotation.y=spec.phase+time*rate*spec.speed;body.rotation.y=time*.055*(1+index*.12)});sun.rotation.y=time*.018};
   return {group,interactives,sun};
 }
 
