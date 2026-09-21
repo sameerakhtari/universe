@@ -1,71 +1,81 @@
-# Universe — An Interactive Journey to Earth
+# Universe
 
-A dependency-free interactive learning site that starts near the edge of the observable universe and continuously dives inward toward Earth.
+A real-time 3D educational journey from the observable universe to Earth's surface.
 
-## Highlights
+This version is a ground-up rebuild using **Three.js + WebGL + Vite**. It is not a sequence of 2D backgrounds: scroll drives a perspective camera through one spatially arranged 3D experience, and hover/click uses raycasting against real scene objects.
 
-### Realism pass
+## What changed
 
-The renderer now uses temperature-varied stars, restrained bloom, warm galactic bulges, cooler outer stellar populations, spiral-arm dust lanes, planet-specific lighting and atmospheres, layered Saturn rings, Jupiter banding, an Earth day/night terminator, city lights, clouds, ocean/land shaping, atmospheric limb glow and a deeper orbit-to-surface descent. Visual object sizes are intentionally compressed for legibility; the scale journey itself is logarithmic.
+- Real perspective camera travel with scroll-controlled position, target and field of view
+- Thousands of GPU-rendered 3D stars with color-temperature variation and parallax
+- Procedural spiral galaxies with stellar populations, warm bulges and dark dust lanes
+- 3D cosmic-web nodes and filaments
+- Procedural Milky Way and Local Group galaxies
+- Volumetric-feeling Solar Neighborhood and Oort Cloud particle fields
+- True planet meshes moving in orbital planes
+- Separate materials/textures for Jupiter, Saturn, Uranus, Neptune, Mercury, Venus, Earth and Mars
+- Saturn ring geometry, Jupiter banding and Great Red Spot
+- Persistent high-detail Earth mesh with cloud shell and Fresnel atmosphere
+- Earth–Moon orbital system
+- Dedicated low-orbit, atmosphere and ocean-surface 3D environments
+- Three.js raycasting for hover/click inspection
+- Subtle bloom and ACES tone mapping
+- Automatic lower-quality settings for constrained devices
+- No GitHub Actions
 
+## Scientific scale note
 
-- Long-form scroll-driven cosmic zoom across 15 scales: observable universe → cosmic web → Laniakea → Local Sheet → Local Group → Milky Way → solar neighborhood → Oort Cloud → outer Solar System → inner Solar System → Earth–Moon → Earth → low orbit → atmosphere → surface
-- Procedural rendering for stars, galaxies, cosmic filaments, orbits, atmosphere and motion
-- Pointer parallax plus frame-accurate hover targets tied to the actual rendered positions of galaxies, stars and moving planets
-- Hover gives a quick explanation; click/tap opens a detailed fact inspector
-- Auto-dismissing stage briefings, scale/progress HUD, 15-stage navigator, keyboard controls and reduced-motion support
-- Responsive desktop/mobile design
-- No runtime framework, analytics, trackers, external fonts or third-party scripts
-- No GitHub Actions and no generated build artifacts
+The journey covers roughly 23 orders of magnitude. Literal astronomical distances and object sizes cannot coexist in one conventional floating-point 3D scene while remaining visible and navigable, so positions and visible radii are **logarithmically/narratively compressed**. The educational labels state representative real-world scales and distances.
 
-## Run locally
+## Run on macOS
 
-### Simple static server
+Requirements: Node.js 22+.
 
 ```bash
 git clone https://github.com/sameerakhtari/universe.git
 cd universe
-python3 -m http.server 8080
+npm install
+npm run dev
 ```
 
-Open `http://localhost:8080`.
+Open the local URL Vite prints, normally:
 
-### Docker Compose + Nginx
+```text
+http://localhost:5173
+```
+
+For a production build:
+
+```bash
+npm run build
+npm run preview
+```
+
+## Docker / homelab
 
 ```bash
 docker compose up -d --build
 ```
 
-Open `http://SERVER_IP:8088`.
+Open:
 
-Stop it with:
-
-```bash
-docker compose down
+```text
+http://SERVER_IP:8088
 ```
-
-If you use Nginx Proxy Manager, create a Proxy Host pointing to `http://SERVER_IP:8088`.
-
-A direct Nginx example is included at `deploy/nginx-site.conf`.
 
 ## Controls
 
-- Scroll / trackpad — travel across scale
-- Move pointer — perspective/parallax
-- Hover — discover interactive targets
-- Click/tap — pin detailed facts
-- Arrow Up/Down or Page Up/Down — jump between stages
-- Home / End — beginning / Earth
-- Esc — close pinned details
+- Scroll: travel inward/outward through scale
+- Pointer: subtle camera look/parallax
+- Hover: raycast an object for quick facts
+- Click: open full object details
+- Arrow Up/Down or Page Up/Down: move stage-by-stage
+- Home/End: beginning/end
+- Esc: close inspector
 
-## Scientific framing
+## Dependencies
 
-The journey spans tens of orders of magnitude, so a literal linear-scale rendering would be impossible on a normal display. The site uses a logarithmic educational scale and artistically compressed transitions while labeling representative real-world distances.
+- `three` 0.186.0
+- `vite` 8.3.0
 
-## Security
-
-The public experience is intentionally static: no forms, login, cookies, local storage, server-side code, analytics, external JavaScript, or remote fonts. The included Nginx configs add restrictive security headers.
-
-## License
-
-MIT.
+No remote fonts, trackers, analytics, runtime CDNs, or GitHub Actions are used.
