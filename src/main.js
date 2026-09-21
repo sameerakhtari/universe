@@ -6,6 +6,8 @@ const fallback = document.querySelector('#webglFallback');
 const fallbackTitle = document.querySelector('#fallbackTitle');
 const fallbackMessage = document.querySelector('#fallbackMessage');
 const fallbackDetails = document.querySelector('#fallbackDetails');
+const fallbackReload = document.querySelector('#fallbackReload');
+fallbackReload?.addEventListener('click', () => location.reload());
 
 function supportsWebGL2() {
   try {
