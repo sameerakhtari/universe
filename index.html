@@ -1,84 +1,78 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#01030a">
-  <meta name="description" content="An interactive journey from the observable universe all the way down to Earth.">
-  <meta name="color-scheme" content="dark">
-  <title>UNIVERSE — From the Cosmic Horizon to Earth</title>
-  <link rel="icon" href="./assets/universe-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#010205" />
+  <meta name="description" content="A real-time 3D journey from the observable universe to Earth's surface." />
+  <meta name="color-scheme" content="dark" />
+  <title>UNIVERSE — A Journey to Earth</title>
 </head>
 <body>
-  <noscript><div class="noscript">JavaScript is required for the interactive universe.</div></noscript>
   <canvas id="universe" aria-hidden="true"></canvas>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="vignette" aria-hidden="true"></div>
-  <div id="cursorLens" class="cursor-lens" aria-hidden="true"></div>
+  <div class="film-grain" aria-hidden="true"></div>
+  <div class="edge-vignette" aria-hidden="true"></div>
 
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Universe home">
-      <img src="./assets/universe-mark.svg" alt="" width="28" height="28">
+      <span class="brand-orbit" aria-hidden="true"><i></i></span>
       <span>UNIVERSE</span>
     </a>
     <div class="top-actions">
-      <button id="stageInfoToggle" class="ghost-btn" type="button">Stage info</button>
-      <button id="soundToggle" class="ghost-btn" type="button" aria-pressed="false" title="Toggle ambient sound">
-        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="btn-label">Sound</span>
-      </button>
-      <button id="helpToggle" class="ghost-btn" type="button" aria-expanded="false" aria-controls="helpPanel">Controls</button>
+      <button id="infoButton" class="hud-button" type="button">Stage info</button>
+      <button id="soundButton" class="hud-button" type="button" aria-pressed="false">Ambient</button>
+      <button id="helpButton" class="hud-button" type="button" aria-expanded="false">Controls</button>
     </div>
   </header>
 
-  <aside class="scale-rail" aria-label="Journey progress">
-    <div class="rail-line"><span id="railFill"></span></div>
+  <aside class="scale-hud" aria-label="Journey progress">
+    <div class="scale-line"><span id="scaleFill"></span></div>
     <ol id="stageNav"></ol>
   </aside>
 
+  <div class="telemetry" aria-hidden="true">
+    <span id="stageReadout">COSMIC HORIZON</span>
+    <span id="scaleReadout">10²⁶ m</span>
+    <span>LOGARITHMIC JOURNEY · DISPLAY SIZES COMPRESSED</span>
+  </div>
+
   <main id="top">
-    <section class="hero" aria-labelledby="heroTitle">
+    <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">A DESCENT THROUGH ~26 ORDERS OF MAGNITUDE</p>
-        <h1 id="heroTitle">Everything.<br><span>Then one world.</span></h1>
-        <p class="hero-lede">Start near the cosmic horizon and keep scrolling. The journey slows down as structures become familiar: superclusters, galaxies, stars, planets, the Earth–Moon system, our atmosphere and finally the surface.</p>
-        <div class="scroll-cue" aria-hidden="true"><span>Scroll inward</span><b></b></div>
+        <p class="eyebrow">AN INTERACTIVE DESCENT THROUGH COSMIC SCALE</p>
+        <h1>Find Earth<br><span>from everything.</span></h1>
+        <p class="hero-lede">Scroll to move a real 3D camera from the observable universe through structure, galaxies, stars and the Solar System until Earth becomes the entire world around you.</p>
+        <div class="scroll-cue"><i></i><span>Scroll inward</span></div>
       </div>
     </section>
-
-    <div id="stageSections" aria-hidden="true"></div>
-
-    <section class="finale" aria-labelledby="finaleTitle">
+    <div id="journeySections" aria-hidden="true"></div>
+    <section class="finale">
       <div class="finale-card">
-        <p class="eyebrow">ONE PLANET · ONE BIOSPHERE</p>
-        <h2 id="finaleTitle">You crossed the observable universe to arrive here.</h2>
-        <p>The final frame is not a map pin. It is a reminder of scale: every ocean, city, forest and person occupies a thin living layer on one small planet around one ordinary star.</p>
-        <button id="restartButton" class="primary-btn" type="button">Travel outward again</button>
+        <p class="eyebrow">HOME</p>
+        <h2>The universe did not get smaller.<br>Our point of view changed.</h2>
+        <p>Travel outward again, or use the scale rail to revisit any level of the journey.</p>
+        <button id="restartButton" class="primary-button" type="button">Return to the cosmic horizon</button>
       </div>
     </section>
   </main>
 
-  <section id="stageToast" class="stage-toast" aria-live="polite" aria-hidden="true">
-    <button id="stageToastClose" class="stage-toast-close" type="button" aria-label="Hide stage information">×</button>
-    <div class="stage-toast-head">
-      <span id="stageNumber">01</span>
-      <p id="stageKicker" class="eyebrow"></p>
-    </div>
-    <h2 id="stageTitle"></h2>
+  <section id="stagePanel" class="stage-panel" aria-live="polite" aria-hidden="true">
+    <button id="stagePanelClose" class="close-button" type="button" aria-label="Close stage information">×</button>
+    <p id="stageKicker" class="eyebrow"></p>
+    <div class="stage-title-row"><span id="stageNumber"></span><h2 id="stageTitle"></h2></div>
     <p id="stageDescription"></p>
-    <div class="fact-row"><span id="stageScale"></span><span id="stageDistance"></span></div>
+    <div class="stage-facts"><span id="stageScale"></span><span id="stageDistance"></span></div>
   </section>
 
-  <div id="targetHint" class="target-hint" hidden>
-    <span class="hint-type"></span>
-    <strong class="hint-name"></strong>
-    <p class="hint-summary"></p>
-    <small>Click for full details</small>
+  <div id="hoverCard" class="hover-card" hidden>
+    <p id="hoverType" class="eyebrow"></p>
+    <strong id="hoverName"></strong>
+    <span id="hoverSummary"></span>
+    <small>Click for details</small>
   </div>
 
-  <aside id="inspector" class="inspector" aria-live="polite" aria-hidden="true">
-    <button id="inspectorClose" class="inspector-close" type="button" aria-label="Close details">×</button>
+  <aside id="inspector" class="inspector" aria-hidden="true">
+    <button id="inspectorClose" class="close-button" type="button" aria-label="Close object details">×</button>
     <p id="inspectorType" class="eyebrow"></p>
     <h2 id="inspectorTitle"></h2>
     <p id="inspectorText"></p>
@@ -86,22 +80,22 @@
   </aside>
 
   <aside id="helpPanel" class="help-panel" hidden>
-    <p class="eyebrow">NAVIGATION</p>
-    <div><kbd>Scroll</kbd><span>Travel inward / outward</span></div>
-    <div><kbd>Move</kbd><span>Parallax the scene</span></div>
-    <div><kbd>Hover</kbd><span>Reveal an object's quick facts</span></div>
-    <div><kbd>Click</kbd><span>Pin full details</span></div>
-    <div><kbd>↑ ↓</kbd><span>Jump one scale</span></div>
+    <p class="eyebrow">CONTROLS</p>
+    <div><kbd>Scroll</kbd><span>Travel through scale</span></div>
+    <div><kbd>Move</kbd><span>Look around subtly</span></div>
+    <div><kbd>Hover</kbd><span>Identify real 3D objects</span></div>
+    <div><kbd>Click</kbd><span>Open detailed facts</span></div>
+    <div><kbd>↑ ↓</kbd><span>Jump between stages</span></div>
     <div><kbd>Esc</kbd><span>Close details</span></div>
   </aside>
 
-  <div class="coordinates" aria-hidden="true">
-    <span id="scaleReadout">Scale ~10^26 m</span>
-    <span id="journeyReadout">Cosmic horizon</span>
-    <span id="pointerReadout">RA — / DEC —</span>
-    <span class="accuracy-note">LOG SCALE · VISUAL SIZES COMPRESSED</span>
+  <div id="cursor" class="cursor" aria-hidden="true"><i></i></div>
+  <div id="loading" class="loading"><span>Constructing universe</span><i></i></div>
+  <div id="webglFallback" class="fallback" hidden>
+    <h1>WebGL is required</h1>
+    <p>This experience needs hardware-accelerated WebGL. Try a current Safari, Chrome, Firefox, or Edge browser with graphics acceleration enabled.</p>
   </div>
 
-  <script type="module" src="./src/app.js"></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
